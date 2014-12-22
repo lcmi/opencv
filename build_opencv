@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# http://docs.opencv.org/doc/tutorials/introduction/android_binary_package/dev_with_OCV_on_Android.html
+# http://code.opencv.org/projects/opencv/wiki/Building_OpenCV4Android_from_trunk
+# https://github.com/Itseez/opencv
+
+export ANDROID_STANDALONE_TOOLCHAIN=/nv/opencv/arm-linux-androideabi-4.6
+export ANDROID_SDK=/nv/opencv/android-sdk-linux
+export ANDROID_SDK_TOOLS_PATH=/nv/opencv/android-sdk-linux/tools
+
+cd ./platforms
+
+sh ./scripts/cmake_android_arm.sh
+
+#cmake -DBUILD_SHARED_LIBS=OFF ..
+
+cd build_android_arm
+make -j8
+make install
+
