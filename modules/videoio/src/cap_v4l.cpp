@@ -242,8 +242,8 @@ make & enjoy!
 #endif
 
 /* Defaults - If your board can do better, set it here.  Set for the most common type inputs. */
-#define DEFAULT_V4L_WIDTH  640
-#define DEFAULT_V4L_HEIGHT 480
+#define DEFAULT_V4L_WIDTH  1280
+#define DEFAULT_V4L_HEIGHT 720
 
 #define CHANNEL_NUMBER 1
 #define MAX_CAMERAS 8
@@ -1669,9 +1669,9 @@ yuyv_to_rgb24 (int width, int height, unsigned char *src, unsigned char *dst)
          SAT(g);
          SAT(b);
 
-     *d++ = b;
-     *d++ = g;
      *d++ = r;
+     *d++ = g;
+     *d++ = b;
 
          r = y2 + cr;
          b = y2 + cb;
@@ -1680,9 +1680,9 @@ yuyv_to_rgb24 (int width, int height, unsigned char *src, unsigned char *dst)
          SAT(g);
          SAT(b);
 
-     *d++ = b;
-     *d++ = g;
      *d++ = r;
+     *d++ = g;
+     *d++ = b;
       }
    }
 }
