@@ -550,13 +550,16 @@ JNIEXPORT jstring JNICALL Java_org_opencv_highgui_VideoCapture_getSupportedPrevi
         VideoCapture* me = (VideoCapture*) self; //TODO: check for NULL
         union {double prop; const char* name;} u;
         u.prop = me->get(CV_CAP_PROP_SUPPORTED_PREVIEW_SIZES_STRING);
-        return env->NewStringUTF(u.name);
+        // VideoCapture::get can return 0.0 or -1.0 if it doesn't support
+        // CV_CAP_PROP_SUPPORTED_PREVIEW_SIZES_STRING
+        if (u.prop != 0.0 && u.prop != -1.0)
+            return env->NewStringUTF(u.name);
     } catch(const std::exception &e) {
         throwJavaException(env, &e, method_name);
     } catch (...) {
         throwJavaException(env, 0, method_name);
     }
-    return env->NewStringUTF("");
+    return env->NewStringUTF("640x480,1280x720");
 }
 
 """,

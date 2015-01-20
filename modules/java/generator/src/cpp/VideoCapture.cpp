@@ -338,7 +338,7 @@ JNIEXPORT jstring JNICALL Java_org_opencv_highgui_VideoCapture_n_1getSupportedPr
     } catch (...) {
         throwJavaException(env, 0, method_name);
     }
-    return env->NewStringUTF("");
+    return env->NewStringUTF("640x480,1280x720");
 }
 
 
