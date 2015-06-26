@@ -90,20 +90,20 @@ ocv_add_precompiled_headers(${the_module})
 ################################################################################################################
 ################################      GPU Module Tests     #####################################################
 ################################################################################################################
-file(GLOB test_srcs "test/*.cpp")
-file(GLOB test_hdrs "test/*.hpp" "test/*.h")
+#file(GLOB test_srcs "test/*.cpp")
+#file(GLOB test_hdrs "test/*.hpp" "test/*.h")
 
-set(nvidia "")
-if(HAVE_CUDA)
-  file(GLOB nvidia "test/nvidia/*.cpp" "test/nvidia/*.hpp" "test/nvidia/*.h")
-  set(nvidia FILES "Src\\\\\\\\NVidia" ${nvidia}) # 8 ugly backslashes :'(
-endif()
+#set(nvidia "")
+#if(HAVE_CUDA)
+#  file(GLOB nvidia "test/nvidia/*.cpp" "test/nvidia/*.hpp" "test/nvidia/*.h")
+#  set(nvidia FILES "Src\\\\\\\\NVidia" ${nvidia}) # 8 ugly backslashes :'(
+#endif()
 
-ocv_add_accuracy_tests(FILES "Include" ${test_hdrs}
-                       FILES "Src" ${test_srcs}
-                       ${nvidia})
-ocv_add_perf_tests()
+#ocv_add_accuracy_tests(FILES "Include" ${test_hdrs}
+#                       FILES "Src" ${test_srcs}
+#                       ${nvidia})
+#ocv_add_perf_tests()
 
-if(HAVE_CUDA)
-  add_subdirectory(perf4au)
-endif()
+#if(HAVE_CUDA)
+#  add_subdirectory(perf4au)
+#endif()
