@@ -112,7 +112,7 @@ namespace cv { namespace gpu
         // Creates DeviceInfo object for the given GPU
         DeviceInfo(int device_id) : device_id_(device_id) { query(); }
 
-        std::string name() const { return name_; }
+        std::string name() const { return std::string(name_); }
 
         // Return compute capability versions
         int majorVersion() const { return majorVersion_; }
@@ -139,7 +139,7 @@ namespace cv { namespace gpu
 
         int device_id_;
 
-        std::string name_;
+        char name_[256];
         int multi_processor_count_;
         int majorVersion_;
         int minorVersion_;

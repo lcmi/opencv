@@ -15,7 +15,7 @@ public:
     virtual size_t totalMemory(int id) const = 0;
     virtual bool supports(int id, FeatureSet) const = 0;
     virtual bool isCompatible(int id) const = 0;
-    virtual std::string name(int id) const = 0;
+    virtual const char* name(int id) const = 0;
     virtual int majorVersion(int id) const = 0;
     virtual int minorVersion(int id) const = 0;
     virtual int multiProcessorCount(int id) const = 0;
@@ -74,7 +74,7 @@ public:
     size_t totalMemory(int) const { throw_nogpu; return 0; }
     bool supports(int, FeatureSet) const { throw_nogpu; return false; }
     bool isCompatible(int) const { throw_nogpu; return false; }
-    std::string name(int) const { throw_nogpu; return std::string(); }
+    const char* name(int) const { throw_nogpu; return NULL; }
     int majorVersion(int) const { throw_nogpu; return -1; }
     int minorVersion(int) const { throw_nogpu; return -1; }
     int multiProcessorCount(int) const { throw_nogpu; return -1; }
@@ -614,7 +614,7 @@ public:
                 return false;
     }
 
-    std::string name(int id) const
+    const char* name(int id) const
     {
         const cudaDeviceProp* prop = deviceProps.get(id);
         return prop->name;

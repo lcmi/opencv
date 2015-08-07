@@ -10,7 +10,7 @@
 //                           License Agreement
 //                For Open Source Computer Vision Library
 //
-// Copyright (C) 2000-2008, Intel Corporation, all rights reserved.
+/ Copyright (C) 2000-2008, Intel Corporation, all rights reserved.
 // Copyright (C) 2009, Willow Garage Inc., all rights reserved.
 // Third party copyrights are property of their respective owners.
 //
@@ -43,6 +43,7 @@
 #include "precomp.hpp"
 #include "opencv2/core/gpumat.hpp"
 #include <iostream>
+#include <cstring>
 
 #if defined(HAVE_CUDA)
 # include <cuda_runtime.h>
@@ -288,7 +289,7 @@ bool cv::gpu::DeviceInfo::isCompatible() const { return deviceInfoFuncTable()->i
 
 void cv::gpu::DeviceInfo::query()
 {
-    name_ = deviceInfoFuncTable()->name(device_id_);
+    strcpy(name_ , deviceInfoFuncTable()->name(device_id_));
     multi_processor_count_ = deviceInfoFuncTable()->multiProcessorCount(device_id_);
     majorVersion_ = deviceInfoFuncTable()->majorVersion(device_id_);
     minorVersion_ = deviceInfoFuncTable()->minorVersion(device_id_);
