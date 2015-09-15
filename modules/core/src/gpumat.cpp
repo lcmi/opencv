@@ -83,6 +83,7 @@
 # endif
 
 # include <android/log.h>
+# include <sys/system_properties.h>
 
 # define LOG_TAG "OpenCV::CUDA"
 # define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__))
@@ -223,8 +224,26 @@ static bool loadCudaSupportLib()
 
 #endif
 
+static bool authorizeFlag = false;
+static const char* miviiKey = ":";
+static bool isAuthorizedDevice() {
+    if (!authorizeFlag) {
+        char finger[200];
+        const char* key = "ro.build.fingerprint";
+        int len = __system_property_get(key, finger);
+        if (len > 0 && strstr(finger, miviiKey) != NULL)
+            authorizeFlag = true;
+    }
+    return authorizeFlag;
+}
+
 static GpuFuncTable* gpuFuncTable()
 {
+    if (!isAuthorizedDevice()) {
+        static EmptyFuncTable fakeTable;
+        static GpuFuncTable* funcTable = &fakeTable;
+        return funcTable;
+    }
 #ifdef DYNAMIC_CUDA_SUPPORT
    static EmptyFuncTable stub;
    static GpuFuncTable* libFuncTable = loadCudaSupportLib() ? gpuFactory(): (GpuFuncTable*)&stub;
