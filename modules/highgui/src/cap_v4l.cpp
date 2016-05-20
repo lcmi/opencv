@@ -375,7 +375,7 @@ static void icvInitCapture_V4L() {
    CameraNumber = 0;
    while(CameraNumber < MAX_CAMERAS) {
       /* Print the CameraNumber at the end of the string with a width of one character */
-      sprintf(deviceName, "/dev/video%1d", CameraNumber);
+      sprintf(deviceName, "/dev/camera/video%1d", CameraNumber);
       /* Test using an open to see if this new device name really does exists. */
       deviceHandle = open(deviceName, O_RDONLY);
       if (deviceHandle != -1) {
@@ -1137,7 +1137,7 @@ static CvCaptureCAM_V4L * icvCaptureFromCAM_V4L (int index)
      autoindex++;// i can recall icvOpenCAM_V4l with index=-1 for next camera
    }
    /* Print the CameraNumber at the end of the string with a width of one character */
-   sprintf(deviceName, "/dev/video%1d", index);
+   sprintf(deviceName, "/dev/camera/video%1d", index);
 
    /* w/o memset some parts  arent initialized - AKA: Fill it with zeros so it is clean */
    memset(capture,0,sizeof(CvCaptureCAM_V4L));
