@@ -72,6 +72,7 @@ StereoSGBM::StereoSGBM()
     speckleWindowSize = 0;
     speckleRange = 0;
     fullDP = false;
+    distPenalty = 0.1;
 }
 
 
@@ -91,6 +92,7 @@ StereoSGBM::StereoSGBM( int _minDisparity, int _numDisparities, int _SADWindowSi
     speckleWindowSize = _speckleWindowSize;
     speckleRange = _speckleRange;
     fullDP = _fullDP;
+    distPenalty = 0.1;
 }
 
 
@@ -111,7 +113,7 @@ StereoSGBM::~StereoSGBM()
 static void calcPixelCostBT( const Mat& img1, const Mat& img2, int y,
                             int minD, int maxD, CostType* cost,
                             PixType* buffer, const PixType* tab,
-                            int tabOfs, int )
+                            int tabOfs, int , double distPenalty )
 {
     int x, c, width = img1.cols, cn = img1.channels();
     int minX1 = max(-maxD, 0), maxX1 = width + min(minD, 0);
@@ -235,6 +237,8 @@ static void calcPixelCostBT( const Mat& img1, const Mat& img2, int y,
                     int c1 = max(0, v - u1); c1 = max(c1, u0 - v);
 
                     cost[x*D + d] = (CostType)(cost[x*D+d] + (min(c0, c1) >> diff_scale));
+                    double penalty = ((double)(d - minD)) * distPenalty;
+                    cost[x*D + d] += (CostType)penalty;
                 }
             }
         }
@@ -436,7 +440,7 @@ static void computeDisparitySGBM( const Mat& img1, const Mat& img2,
 
                     if( k < height )
                     {
-                        calcPixelCostBT( img1, img2, k, minD, maxD, pixDiff, tempBuf, clipTab, TAB_OFS, ftzero );
+                        calcPixelCostBT( img1, img2, k, minD, maxD, pixDiff, tempBuf, clipTab, TAB_OFS, ftzero, params.distPenalty );
 
                         memset(hsumAdd, 0, D*sizeof(CostType));
                         for( x = 0; x <= SW2*D; x += D )

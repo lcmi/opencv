@@ -716,6 +716,7 @@ public:
     CV_PROP_RW int speckleRange;
     CV_PROP_RW int disp12MaxDiff;
     CV_PROP_RW bool fullDP;
+    CV_PROP_RW double distPenalty;
 
 protected:
     Mat buffer;
