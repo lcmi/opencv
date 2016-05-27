@@ -72,7 +72,7 @@ StereoSGBM::StereoSGBM()
     speckleWindowSize = 0;
     speckleRange = 0;
     fullDP = false;
-    distPenalty = 0.1;
+    distPenalty = 0.0;
 }
 
 
@@ -92,7 +92,7 @@ StereoSGBM::StereoSGBM( int _minDisparity, int _numDisparities, int _SADWindowSi
     speckleWindowSize = _speckleWindowSize;
     speckleRange = _speckleRange;
     fullDP = _fullDP;
-    distPenalty = 0.1;
+    distPenalty = 0.0;
 }
 
 
